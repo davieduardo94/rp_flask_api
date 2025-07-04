@@ -2,7 +2,7 @@
 
 openapi: 3.0.0
 info:
-  title: "RP Flask REST API"
+  title: "RP Flask REST API 1.0"
   description: "An API about people and notes"
   version: "1.0.0"
 
@@ -72,7 +72,7 @@ paths:
       tags:
         - People
       operationId: "people.update"
-      summary: "Update a person"
+      summary: "Update a person first name"
       parameters:
         - $ref: "#/components/parameters/lname"
       responses:
@@ -84,3 +84,13 @@ paths:
             schema:
               x-body-name: "person"
               $ref: "#/components/schemas/Person"
+    delete:
+      tags:
+        - People
+      operationId: "people.delete"
+      summary: "Delete a person"
+      parameters:
+        - $ref: "#/components/parameters/lname"
+      responses:
+        "204":
+          description: "Successfully deleted person"
