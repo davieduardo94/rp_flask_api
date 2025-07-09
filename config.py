@@ -14,4 +14,4 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{basedir / 'people.db'}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-ma = Marshmallow(app)
+mash = Marshmallow(app)
