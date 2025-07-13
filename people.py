@@ -1,4 +1,5 @@
 from flask import abort, make_response
+from config import db
 from models import Person, people_schema, person_schema
 
 def read_all():
@@ -7,15 +8,14 @@ def read_all():
 
 def create(person):
     lname = person.get("lname")
-    fname = person.get("fname")
+    existing_person = Person.query.filter(Person.lname == lname).one_or_none() #verificando se já existe
 
-    if lname and lname not in PEOPLE:
-        PEOPLE[lname] = {
-            "lname" : lname,
-            "fname" : fname,
-            "timestamp" : get_timestamp()
-        }
-        return PEOPLE[lname], 201
+
+    if existing_person is None:
+        new_person = person_schema.load(person, session=db.session)
+        db.session.add(new_person) #adicionando ao banco
+        db.session.commit()
+        return person_schema.dump(new_person),201
     else:
         abort(
             406,
