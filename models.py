@@ -9,7 +9,7 @@ class Person(db.Model):
     lname = db.Column(db.String(32), unique=True)
     fname = db.Column(db.String(32))
     timestamp = db.Column(
-        db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+        db.DateTime, default=datetime.now, onupdate=datetime.now
     )
 
 # mashmallow convert os dados para JSON
