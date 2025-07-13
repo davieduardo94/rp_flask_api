@@ -23,8 +23,9 @@ def create(person):
         )
 
 def read_one(lname):
-    if lname in PEOPLE:
-        return PEOPLE[lname]
+    person = Person.query.filter(Person.lname == lname).one_or_none()
+    if person is not None:
+        return person_schema.dump(person)
     else:
         abort(
             404, f"Person with last name {lname} not found"
