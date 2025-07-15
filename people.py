@@ -32,10 +32,13 @@ def read_one(lname):
         )
 
 def update(lname, person):
-    if lname in PEOPLE:
-        PEOPLE[lname]["fname"] = person.get("fname", PEOPLE[lname]["fname"])
-        PEOPLE[lname]["timestamp"] = get_timestamp()
-        return PEOPLE[lname]
+    existing_person = Person.query.filter(Person.lname == lname).one_or_none()
+    if existing_person:
+        update_person = person_schema.load(person, session=db.session)
+        existing_person.fname = update_person.fname
+        db.session.merge(existing_person)
+        db.session.commit()
+        return person_schema.dump(existing_person),201
     else:
         abort(
             404,
