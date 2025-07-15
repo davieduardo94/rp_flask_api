@@ -46,11 +46,12 @@ def update(lname, person):
         )
 
 def delete(lname):
-    if lname in PEOPLE:
-        del PEOPLE[lname]
-        return make_response(
-            f"{lname} successfully deleted", 200
-        )
+    existing_person = Person.query.filter(Person.lname == lname).one_or_none()
+
+    if existing_person:
+        db.session.delete(existing_person)
+        db.session.commit()
+        return make_response("f{lname} succesfully deleted"), 200
     else:
         abort(
             404,
