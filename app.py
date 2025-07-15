@@ -1,13 +1,14 @@
 from flask import render_template
-import connexion
+import config
+from models import Person
 
-#add swagger file to app.py
-app = connexion.App(__name__, specification_dir="./")
-app.add_api("swagger.yaml")
+app = config.connex_app #usando o connexion do config.py
+app.add_api(config.basedir / "swagger.yml")
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    people = Person.query.all()
+    return render_template("home.html", people=people)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
