@@ -3,7 +3,7 @@ import config
 from models import Person
 
 app = config.connex_app #usando o connexion do config.py
-app.add_api(config.basedir / "swagger.yml")
+app.add_api(config.basedir / "swagger.yaml")
 
 @app.route("/")
 def home():
@@ -11,4 +11,4 @@ def home():
     return render_template("home.html", people=people)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    app.run(host="0.0.0.0", port=8000)
