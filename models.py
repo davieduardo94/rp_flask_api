@@ -6,7 +6,7 @@ from config import db, mash
 class Note(db.Model):
     __tablename__ = "note"
     id = db.Column(db.Integer, primary_key=True)
-    person_id = db.Column(db.Interger, db.ForeignKey("person.id"))
+    person_id = db.Column(db.Integer, db.ForeignKey("person.id"))
     content = db.Column(db.String, nullable=True)
     timestamp = db.Column(
         db.DateTime, default=datetime.now, onupdate=datetime.now
