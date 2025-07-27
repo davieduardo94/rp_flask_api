@@ -6,13 +6,12 @@ def read_all():
     people = Person.query.all()
     return people_schema.dump(people)
 
-def create(person):
-    lname = person.get("lname")
+def create(body):
+    lname = body.get("lname")
     existing_person = Person.query.filter(Person.lname == lname).one_or_none() #verificando se já existe
 
-
     if existing_person is None:
-        new_person = person_schema.load(person, session=db.session)
+        new_person = person_schema.load(body, session=db.session)
         db.session.add(new_person) #adicionando ao banco
         db.session.commit()
         return person_schema.dump(new_person),201
