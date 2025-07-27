@@ -51,7 +51,6 @@ paths:
           content:
             application/json:
               schema:
-                x-body-name: "person"
                 $ref: "#/components/schemas/Person"
       responses:
         "201":
