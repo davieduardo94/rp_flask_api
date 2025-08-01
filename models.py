@@ -1,6 +1,7 @@
 # models.py
 
 from datetime import datetime
+from marshmallow_sqlalchemy import fields
 from config import db, mash
 
 class Note(db.Model):
@@ -11,6 +12,15 @@ class Note(db.Model):
     timestamp = db.Column(
         db.DateTime, default=datetime.now, onupdate=datetime.now
     )   
+
+
+class NoteSchema(mash.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Note
+        load_instance = True
+        sqla_session = db.session
+        include_fk = True
+
 
 class Person(db.Model):
     __tablename__ = "person"
@@ -35,6 +45,9 @@ class PersonSchema(mash.SQLAlchemyAutoSchema):
         load_instance = True
         sqla_session = db.session
         include_relationships = True
-
+        
+        
+note_schema = NoteSchema()
+notes = fields.Nested(NoteSchema, many=True)
 person_schema = PersonSchema()
 people_schema = PersonSchema(many=True)
