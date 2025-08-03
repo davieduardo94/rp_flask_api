@@ -8,10 +8,10 @@ class Note(db.Model):
     __tablename__ = "note"
     id = db.Column(db.Integer, primary_key=True)
     person_id = db.Column(db.Integer, db.ForeignKey("person.id"))
-    content = db.Column(db.String, nullable=True)
+    content = db.Column(db.String, nullable=False)
     timestamp = db.Column(
         db.DateTime, default=datetime.now, onupdate=datetime.now
-    )   
+    )
 
 
 class NoteSchema(mash.SQLAlchemyAutoSchema):
@@ -46,8 +46,9 @@ class PersonSchema(mash.SQLAlchemyAutoSchema):
         sqla_session = db.session
         include_relationships = True
         
-        
+    notes = fields.Nested(NoteSchema, many=True)
+
+
 note_schema = NoteSchema()
-notes = fields.Nested(NoteSchema, many=True)
 person_schema = PersonSchema()
 people_schema = PersonSchema(many=True)
