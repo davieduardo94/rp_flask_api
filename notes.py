@@ -16,12 +16,12 @@ def read_one(note_id):
         )
 
 
-def update(note_id, note):
+def update(note_id, body):
     """ UPDATE NOTE BY ID """
     existing_note = Note.query.get(note_id)
 
     if existing_note:
-        update_note = note_schema.load(note, session=db.session)
+        update_note = note_schema.load(body, session=db.session)
         existing_note.content = update_note.content
         db.session.merge(existing_note)
         db.session.commit()
