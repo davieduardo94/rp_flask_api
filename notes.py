@@ -17,6 +17,7 @@ def read_one(note_id):
 
 
 def update(note_id, note):
+    """ UPDATE NOTE BY ID """
     existing_note = Note.query.get(note_id)
 
     if existing_note:
@@ -27,3 +28,15 @@ def update(note_id, note):
         return note_schema.dump(existing_note), 201
     else:
         abort(404, f"Note with ID {note_id} not found.")
+
+
+def delete(note_id):
+    """ DELETE NOTE BY ID """
+    existing_note = Note.query.get(note_id)
+    
+    if existing_note:
+        db.session.delete(existing_note)
+        db.session.commit()
+        return make_response(f"{note_id} successfully deleted.", 204)
+    else:
+        abort(404,f"Note with ID {note_id} not found")
