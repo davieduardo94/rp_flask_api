@@ -12,6 +12,9 @@ app.add_api(config.basedir / "swagger.yaml")
 #     people = Person.query.all()
 #     return render_template("home.html", people=people)
 
+# Flask interno para o WSGI
+flask_app = app.app
+
 # direcionado para UI da api
 @app.route('/')
 def redirect_to_swagger():
