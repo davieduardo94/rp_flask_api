@@ -9,7 +9,7 @@ def read_all():
 
 def create(body):
     lname = body.get("lname")
-    existing_person = Person.query.filter(Person.lname == lname).one_or_none() #verificando se já existe
+    existing_person = read_one(lname) #verificando se já existe
 
     if existing_person is None:
         new_person = person_schema.load(body, session=db.session)
@@ -32,7 +32,7 @@ def read_one(lname):
         )
 
 def update(lname, person):
-    existing_person = Person.query.filter(Person.lname == lname).one_or_none()
+    existing_person = read_one(lname)
     if existing_person:
         update_person = person_schema.load(person, session=db.session)
         existing_person.fname = update_person.fname
@@ -46,8 +46,7 @@ def update(lname, person):
         )
 
 def delete(lname):
-    existing_person = Person.query.filter(Person.lname == lname).one_or_none()
-
+    existing_person = read_one(lname)
     if existing_person:
         db.session.delete(existing_person)
         db.session.commit()
