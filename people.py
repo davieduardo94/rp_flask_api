@@ -31,10 +31,10 @@ def read_one(lname):
             404, f"Person with last name {lname} not found"
         )
 
-def update(lname, person):
+def update(lname, body):
     existing_person = read_one(lname)
     if existing_person:
-        update_person = person_schema.load(person, session=db.session)
+        update_person = person_schema.load(body, session=db.session)
         existing_person.fname = update_person.fname
         db.session.merge(existing_person)
         db.session.commit()
