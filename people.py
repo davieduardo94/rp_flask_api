@@ -32,7 +32,7 @@ def read_one(lname):
         )
 
 def update(lname, body):
-    existing_person = read_one(lname)
+    existing_person = Person.query.filter(Person.lname == lname).one_or_none()
     if existing_person:
         update_person = person_schema.load(body, session=db.session)
         existing_person.fname = update_person.fname
