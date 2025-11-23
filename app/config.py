@@ -1,8 +1,14 @@
-# app/config.py
+# app/config.py ---> CONEXÃO E INICIALIZAÇÃO DO BANCO
+
 import pathlib
 import connexion
-from flask_mongoengine import MongoEngine
+import os
+from pymongo import MongoClient
 from flask_marshmallow import Marshmallow
+from dotenv import load_dotenv
+
+# carregar arquivo .env
+load_dotenv()
 
 basedir = pathlib.Path(__file__).resolve().parent.parent
 
@@ -10,14 +16,40 @@ basedir = pathlib.Path(__file__).resolve().parent.parent
 connex_app = connexion.App(__name__, specification_dir=basedir)
 app = connex_app.app
 
+# pegar variáveis do .env
+MONGO_USER = os.getenv("MONGO_USER")
+MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
+CLUSTER_NAME = os.getenv("CLUSTER_NAME")
+DB_NAME = os.getenv("DB_NAME")
+APP_NAME = os.getenv("APP_NAME")
+
+MONGO_URI = (
+    f"mongodb+srv://{MONGO_USER}:{MONGO_PASSWORD}@{CLUSTER_NAME}.ryunxve.mongodb.net/?appName={APP_NAME}"
+)
+
 #config do MongoDB
-app.config["MONGODB_SETTINGS"] = {
-        "db": "pessoas_db",
-        "host": "mongodb://localhost:27017/pessoas_db"
-    }
+app.config["MONGO_URI"] = MONGO_URI
 
-# inicializando MongoEngine
-db = MongoEngine()
-db.init_app(app)
+# inicializando PyMongo
+client = MongoClient(MONGO_URI)
 
+# Referência ao banco: pessoas_db
+db = client[DB_NAME]
+
+# Inicializar Marshmallow
 mash = Marshmallow(app)
+
+# try:
+#     database = client.get_database("sample_mflix")
+#     movies = database.get_collection("movies")
+    
+#     # Query for a movie that has the title 'Back to the Future'
+#     query = { "title": "Back to the Future" }
+#     movie = movies.find_one(query)
+    
+#     print(movie)
+    
+#     client.close()
+
+# except Exception as e:
+#     raise Exception("Unable to find the document due to the following error: ", e)
