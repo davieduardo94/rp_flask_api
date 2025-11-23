@@ -29,6 +29,7 @@ jsonschema-specifications==2025.4.1
 MarkupSafe==3.0.2
 marshmallow==4.0.0
 marshmallow-sqlalchemy==1.4.2
+mongoengine==0.29.1
 packaging==25.0
 pluggy==1.6.0
 pymongo==4.10.1
