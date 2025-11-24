@@ -1,5 +1,4 @@
 # app/models/pessoa.py
-from app.config import mash
 from marshmallow import Schema, fields
 
 class PersonSchema(Schema):
@@ -10,5 +9,5 @@ class PersonSchema(Schema):
     created_date = fields.DateTime()
 
 
-people_schema = PersonSchema() # 1 pessoa
-person_schema = PersonSchema(many=True) # varias pessoas
+person_schema = PersonSchema() # 1 pessoa
+people_schema = PersonSchema(many=True) # varias pessoas
