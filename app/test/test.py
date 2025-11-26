@@ -19,3 +19,4 @@ try:
     print("Deserialized:", loaded)
 except ValidationError as err:
     print("Validation errors:", err.messages)
+    # mostrando erro
