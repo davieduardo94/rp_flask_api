@@ -16,7 +16,28 @@ paths:
       summary: "Read the list of people"
       responses:
         200:
-          description: Lista de pessoas
+          description: Lista de pessoas.
+        404:
+          description: Não pessoas cadastradas.
+  /people/{full_name}:
+    get:
+      operationId: app.routes.people_routes.read_person
+      tags:
+        - "People"
+      summary: "Read one person by Full Name"
+      responses:
+        200:
+          description: Pessoa encontrada com sucesso.
+        404:
+          description: Pessoa não encontrada.
+      parameters:
+        - name: full_name
+          in: path
+          required: true
+          schema:
+            type: string
+        
+    
   #   post:
   #     operationId: app.routes.pessoas_routes.criar_pessoa
   #     requestBody:
