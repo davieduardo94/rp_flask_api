@@ -1,84 +1,86 @@
 openapi: 3.0.0
 info:
-  title: "People API"
-  description: "An API to manage people registers"
-  version: "1.0.0"
+  title: People API
+  description: An API to manage people registers
+  version: 1.0.0
 
 servers:
-  - url: "/api"
+  - url: /api
 
 components:
   schemas:
-    PersonSchema:
-      type: "object"
+    Person:
+      type: object
+      properties:
+        full_name:
+          type: string
+        age:
+          type: integer
+        phone_number:
+          type: array
       required:
         - full_name
         - age
         - phone_number
-      properties:
-        full_name:
-          type: "string"
-        phone_number:
-          type: "list"
-        age:
-          type: "integer"
   parameters:
     full_name:
-      name: "full_name"
-      description: "The person full name"
-      in: path
+      name: full_name
+      description: The person full name
+      in: query
       required: True
       schema:
-        type: "string"
-    phone_number:
-      name: "phone_number"
-      description: "List of phone number"
-      in: path
-      required: true
-      schema:
-        type: "list"
+        type: string
     age:
-      name: "age"
-      description: "Person age"
-      in: path
+      name: age
+      description: Person age
+      in: query
       required: true
       schema:
-        type: "integer"
+        type: integer
+    phone_number:
+      name: phone_number
+      description: List of phone number
+      in: query
+      required: true
+      schema:
+        type: array
+        items:
+          type: string
 
 paths:
   /people:
     get:
       operationId: app.routes.people_routes.list_people
       tags:
-        - "People"
-      summary: "Read the list of people"
+        - People
+      summary: Read the list of people
       responses:
         200:
           description: Lista de pessoas.
         404:
-          description: Não pessoas cadastradas.
+          description: Não há pessoas cadastradas.
     post:
       operationId: app.routes.people_routes.create_person
       tags:
-        - "People"
-      summary: "Creates a person"
+        - People
+      summary: Creates a person
       requestBody:
-        description: "Person to create"
+        description: Person to create
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PersonSchema"
+              $ref: "#/components/schemas/Person"
       responses:
-        "201":
-          description: "Successfully created person"
+        201:
+          description: Successfully created person
 
   /people/{full_name}:
     get:
       operationId: app.routes.people_routes.read_person
       tags:
-        - "People"
-      summary: "Read one person by Full Name"
+        - People
+      summary: Read one person by Full Name
       responses:
         200:
           description: Pessoa encontrada com sucesso.
@@ -99,7 +101,7 @@ paths:
   #       content:
   #         application/json:
   #           schema:
-  #             $ref: "#/components/schemas/Pessoa"
+  #             $ref: #/components/schemas/Pessoa
   #     responses:
   #       201:
   #         description: Pessoa criada
@@ -128,7 +130,7 @@ paths:
   #       content:
   #         application/json:
   #           schema:
-  #             $ref: "#/components/schemas/Pessoa"
+  #             $ref: #/components/schemas/Pessoa
   #   delete:
   #     operationId: app.routes.pessoas_routes.deletar_pessoa
   #     parameters:
@@ -137,12 +139,4 @@ paths:
   #         required: true
   #         schema:
   #           type: string
-components:
-  schemas:
-    Pessoa:
-      type: object
-      properties:
-        nome:
-          type: string
-        sobrenome:
-          type: string
+
