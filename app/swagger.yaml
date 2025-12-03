@@ -7,6 +7,44 @@ info:
 servers:
   - url: "/api"
 
+components:
+  schemas:
+    PersonSchema:
+      type: "object"
+      required:
+        - full_name
+        - age
+        - phone_number
+      properties:
+        full_name:
+          type: "string"
+        phone_number:
+          type: "list"
+        age:
+          type: "integer"
+  parameters:
+    full_name:
+      name: "full_name"
+      description: "The person full name"
+      in: path
+      required: True
+      schema:
+        type: "string"
+    phone_number:
+      name: "phone_number"
+      description: "List of phone number"
+      in: path
+      required: true
+      schema:
+        type: "list"
+    age:
+      name: "age"
+      description: "Person age"
+      in: path
+      required: true
+      schema:
+        type: "integer"
+
 paths:
   /people:
     get:
@@ -19,6 +57,22 @@ paths:
           description: Lista de pessoas.
         404:
           description: Não pessoas cadastradas.
+    post:
+      operationId: app.routes.people_routes.create_person
+      tags:
+        - "People"
+      summary: "Creates a person"
+      requestBody:
+        description: "Person to create"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PersonSchema"
+      responses:
+        "201":
+          description: "Successfully created person"
+
   /people/{full_name}:
     get:
       operationId: app.routes.people_routes.read_person
