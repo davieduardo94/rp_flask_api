@@ -1,8 +1,8 @@
 # build_database.py
 
 from datetime import datetime
-from app.config import app, db
-from app.models.models import Person, Note
+from config import app, db
+from models import Person, Note
 
 PEOPLE_NOTES = [
     {
