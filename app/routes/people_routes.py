@@ -1,7 +1,7 @@
 # app/routes/pessoas_routes.py
 from flask import Blueprint, abort, current_app
-from app.extensions import mongo_client, mongo_db
 from app.models.person import people_schema, person_schema
+from datetime import datetime
 
 people_bp = Blueprint("people", __name__)
 
@@ -20,6 +20,23 @@ def list_people():
 
     return people_schema.dump(people_list)
 
+def create_person(body):
+    db = current_app.mongo_db
+    full_name = body.get("full_name")
+    existing_person = db.people.find_one({"full_name" : full_name}, {"_id" : 0})
+
+    if existing_person is None:
+        created_date = datetime.now()
+        body["created_date"] = created_date
+        new_person = person_schema.load(body)
+        created_person = db.people.insert_one(new_person)
+        return person_schema.dump(created_person)
+    else:
+        abort(
+            406,
+            f'Pessoa o nome "{full_name}" já tem cadastro!'
+        )
+
 def read_person(full_name):
     db = current_app.mongo_db
     person = db.people.find_one({"full_name" : full_name}, {"_id" : 0})
@@ -31,17 +48,3 @@ def read_person(full_name):
             404, f"Pessoa com o nome {full_name} não encontrada!"
         )
     
-def create_peson(body):
-    db = current_app.mongo_db
-    full_name = body.get("full_name")
-    existing_person = read_person(full_name)
-
-    if existing_person is None:
-        new_person = person_schema.load(body)
-        person = db.people.insert_one(new_person)
-        return person_schema.dump(person), 201
-    else:
-        abort(
-            406,
-            f"Pessoa o nome {full_name} já tem cadastro!"
-        )
