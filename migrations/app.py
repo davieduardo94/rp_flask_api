@@ -1,6 +1,6 @@
 from flask import render_template
-import app.config as config
-from app.models.models import Person
+import config as config
+from models import Person
 
 app = config.connex_app #usando o connexion do config.py
 app.add_api(config.basedir / "swagger.yaml")
@@ -11,5 +11,5 @@ def home():
     return render_template("home.html", people=people)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="localhost", port=8000)
     
