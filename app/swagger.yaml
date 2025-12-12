@@ -13,11 +13,13 @@ components:
       type: object
       properties:
         full_name:
-          type: string
+          type: "string"
         age:
-          type: integer
+          type: "integer"
         phone_number:
-          type: array
+          type: "array"
+          items: 
+            type: "string"
       required:
         - full_name
         - age
@@ -73,7 +75,11 @@ paths:
               $ref: "#/components/schemas/Person"
       responses:
         201:
-          description: Successfully created person
+          description: "Successfully created person"
+        200:
+          description: "Request OK"
+        401:
+          description: "This person was created before!"
 
   /people/{full_name}:
     get:
