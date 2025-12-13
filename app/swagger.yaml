@@ -98,51 +98,67 @@ paths:
           required: true
           schema:
             type: string
-        
-    
-  #   post:
-  #     operationId: app.routes.pessoas_routes.criar_pessoa
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: #/components/schemas/Pessoa
-  #     responses:
-  #       201:
-  #         description: Pessoa criada
-  # /pessoas/{id}:
-  #   get:
-  #     operationId: app.routes.pessoas_routes.obter_pessoa
-  #     parameters:
-  #       - name: id
-  #         in: path
-  #         required: true
-  #         schema:
-  #           type: string
-  #     responses:
-  #       200:
-  #         description: Pessoa encontrada
-  #   put:
-  #     operationId: app.routes.pessoas_routes.atualizar_pessoa
-  #     parameters:
-  #       - name: id
-  #         in: path
-  #         required: true
-  #         schema:
-  #           type: string
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: #/components/schemas/Pessoa
-  #   delete:
-  #     operationId: app.routes.pessoas_routes.deletar_pessoa
-  #     parameters:
-  #       - name: id
-  #         in: path
-  #         required: true
-  #         schema:
-  #           type: string
+    put:
+      operationId: app.routes.people_routes.update_person
+      tags:
+      - People
+      parameters:
+        - name: full_name
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              PersonUpdate:
+                type: object
+                properties:
+                  full_name:
+                    type: "string"
+                  age:
+                    type: "integer"
+                  phone_number:
+                    type: "array"
+                    items: 
+                      type: "string"
+            # parameters:
+            #   full_name:
+            #     name: full_name
+            #     description: The person full name
+            #     in: query
+            #     required: True
+            #     schema:
+            #       type: string
+            #   age:
+            #     name: age
+            #     description: Person age
+            #     in: query
+            #     required: true
+            #     schema:
+            #       type: integer
+            #   phone_number:
+            #     name: phone_number
+            #     description: List of phone number
+            #     in: query
+            #     required: true
+            #     schema:
+            #       type: array
+            #       items:
+            #         type: string
+      responses:
+        200:
+          description: "Pessoa atualizada com sucesso!"
+        404:
+          description: "Pesso não encontrada!"
+    # delete:
+    #   operationId: app.routes.pessoas_routes.deletar_pessoa
+    #   parameters:
+    #     - name: id
+    #       in: path
+    #       required: true
+    #       schema:
+    #         type: string
 
