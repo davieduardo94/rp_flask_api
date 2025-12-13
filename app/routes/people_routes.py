@@ -47,4 +47,19 @@ def read_person(full_name):
         abort(
             404, f"Pessoa com o nome {full_name} não encontrada!"
         )
-    
+
+
+
+def update_person(full_name, body):
+    db = current_app.mongo_db
+    existing_person = read_person(full_name)
+    if existing_person:
+        query_filter = {"full_name" : full_name}
+        update_person = person_schema.load(body)
+        db.update_one(query_filter, update_person)
+        return person_schema.dump(update_person),201
+    else:
+        abort(
+            404,
+            f"Person with last name {full_name} not found!"
+        )
