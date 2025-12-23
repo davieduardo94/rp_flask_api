@@ -56,7 +56,7 @@ def update_person(full_name, body):
     if existing_person:
         query_filter = {"full_name" : full_name}
         update_person = person_schema.load(body)
-        db.update_one(query_filter, update_person)
+        db.people.update_one(query_filter, update_person)
         return person_schema.dump(update_person),201
     else:
         abort(
