@@ -108,22 +108,15 @@ paths:
           required: true
           schema:
             type: string
+          description: "Name to be updated"
       requestBody:
-        required: true
         content:
           application/json:
             schema:
-              PersonUpdate:
                 type: object
                 properties:
                   full_name:
                     type: "string"
-                  age:
-                    type: "integer"
-                  phone_number:
-                    type: "array"
-                    items: 
-                      type: "string"
             # parameters:
             #   full_name:
             #     name: full_name
