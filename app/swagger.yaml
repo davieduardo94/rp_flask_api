@@ -105,10 +105,15 @@ paths:
       parameters:
         - name: full_name
           in: query
-          required: true
           schema:
             type: string
           description: "Name to be updated"
+        - name: age
+          in: query
+          schema:
+            type: integer
+          description: "Age to be updated"
+
       requestBody:
         content:
           application/json:
@@ -117,6 +122,8 @@ paths:
                 properties:
                   full_name:
                     type: "string"
+                  age:
+                    type: "integer"
             # parameters:
             #   full_name:
             #     name: full_name
@@ -142,7 +149,7 @@ paths:
             #       items:
             #         type: string
       responses:
-        200:
+        201:
           description: "Pessoa atualizada com sucesso!"
         404:
           description: "Pesso não encontrada!"
