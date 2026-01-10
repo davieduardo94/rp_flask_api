@@ -4,6 +4,8 @@ from marshmallow import Schema, fields
 class PersonSchema(Schema):
     _id = fields.Str()   # _id convertido STR
     full_name = fields.Str(required=True)
+    email = fields.Str(required=True)
+    birth_date = fields.Date(required=True)
     age = fields.Int()
     phone_number = fields.List(fields.Str())
     created_date = fields.DateTime()
