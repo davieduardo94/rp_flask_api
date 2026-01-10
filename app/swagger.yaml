@@ -14,6 +14,10 @@ components:
       properties:
         full_name:
           type: "string"
+        email:
+          type: "string"
+        birth_date:
+          type: "string"
         age:
           type: "integer"
         phone_number:
@@ -22,6 +26,8 @@ components:
             type: "string"
       required:
         - full_name
+        - email
+        - birth_date
         - age
         - phone_number
   parameters:
@@ -29,21 +35,19 @@ components:
       name: full_name
       description: The person full name
       in: query
-      required: True
       schema:
         type: string
+    email
     age:
       name: age
       description: Person age
       in: query
-      required: true
       schema:
         type: integer
     phone_number:
       name: phone_number
       description: List of phone number
       in: query
-      required: true
       schema:
         type: array
         items:
@@ -76,8 +80,6 @@ paths:
       responses:
         201:
           description: "Successfully created person"
-        200:
-          description: "Request OK"
         401:
           description: "This person was created before!"
 
@@ -102,6 +104,7 @@ paths:
       operationId: app.routes.people_routes.update_person
       tags:
       - People
+      summary: Update person by Full Name
       parameters:
         - name: full_name
           in: query
@@ -113,7 +116,6 @@ paths:
           schema:
             type: integer
           description: "Age to be updated"
-
       requestBody:
         content:
           application/json:
